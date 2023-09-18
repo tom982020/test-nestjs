@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { JokeController } from './joke/joke.controller';
+import { JokeModule } from './joke/joke.module';
 @Module({
   imports: [
-    AuthModule,
     ConfigModule.forRoot({
       ignoreEnvFile: false,
       envFilePath: ['.env.development.local', '.env.development', '.env'],
@@ -19,8 +19,10 @@ import { ConfigModule } from '@nestjs/config';
       maxPoolSize: 10,
       family: 4, // connect by IPV4
     }),
+    AuthModule,
+    JokeModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
